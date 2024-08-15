@@ -22,6 +22,12 @@ jobs:
           cd frontend
           go build
       - name: go run
-        run: go run backend
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend
+          go run backend
       - name: go run
-        run: go run frontend
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd frontend
+          go run frontend
