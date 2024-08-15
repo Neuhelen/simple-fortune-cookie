@@ -11,10 +11,16 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.21.x'
+      - name: ls
+        run: ls
       - name: Build
-        run: go build -v github.com/Neuhelen/simple-fortune-cookie/backend
+        working-directory: ${{ github.workspace }}
+        run:
+          cd..
+          cd backend
+          go build
       - name: build
-        run: go build -v github.com/Neuhelen/simple-fortune-cookie/frontend
+        run: go build  ${{ github.workspace }}/frontend
       - name: go run
         run: go run backend
       - name: go run
