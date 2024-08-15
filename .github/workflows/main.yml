@@ -16,7 +16,7 @@ jobs:
       - name: Setup redis
         uses: supercharge/redis-github-action@1.7.0
         with: 
-          redis-version: 8
+          redis-version: latest
       - name: Install redis cli # so we can test the server
         run: sudo apt-get install -y redis-tools
 
@@ -25,7 +25,7 @@ jobs:
       - name: Start Redis
         uses: supercharge/redis-github-action@1.7.0
         with:
-          redis-version: 8
+          redis-version: latest
           image: redis
       - name: Build
         working-directory: ${{ github.workspace }}
