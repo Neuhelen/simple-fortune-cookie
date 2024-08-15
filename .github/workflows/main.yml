@@ -22,11 +22,6 @@ jobs:
 
       - name: Verify that redis is up
         run: redis-cli ping
-      - name: Start Redis
-        uses: supercharge/redis-github-action@1.7.0
-        with:
-          redis-version: latest
-          image: redis
       - name: Build
         working-directory: ${{ github.workspace }}
         run: |
