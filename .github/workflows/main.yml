@@ -4,10 +4,6 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        redis-version: [1.8.5]
-        github: [1.7.0]
     services:
       redis:
         image: redis
@@ -18,19 +14,18 @@ jobs:
         with:
           go-version: '1.21.x'
       - name: Setup redis
-        uses: supercharge/redis-github-action@${{ matrix.github }}
+        uses: supercharge/redis-github-action@1.7.0
         with: 
-          redis-version: ${{ matrix.redis-version }}
-
+          redis-version: 1.8.5
       - name: Install redis cli # so we can test the server
         run: sudo apt-get install -y redis-tools
 
       - name: Verify that redis is up
         run: redis-cli ping
       - name: Start Redis
-        uses: supercharge/redis-github-action@{{ matrix.github }}
+        uses: supercharge/redis-github-action@1.7.0
         with:
-          redis-version: ${{ matrix.redis-version }}
+          redis-version: 1.8.5
           image: redis
       - name: Build
         working-directory: ${{ github.workspace }}
