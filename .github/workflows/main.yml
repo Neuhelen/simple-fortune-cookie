@@ -15,7 +15,7 @@ jobs:
         run: ls
       - name: Build
         working-directory: ${{ github.workspace }}
-        run:
+        run: |
           cd backend
           go build
       - name: build
