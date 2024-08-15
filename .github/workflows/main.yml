@@ -11,12 +11,10 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.21.x'
-      - name: Install dependencies
-        run: go get .
       - name: Build
-        run: go build -v ./backend
+        run: go build -v ../../backend
       - name: build
-        run: go build -v ./frontend
+        run: go build -v ../../frontend
       - name: go run
         run: go run backend
       - name: go run
