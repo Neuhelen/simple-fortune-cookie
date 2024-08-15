@@ -21,8 +21,6 @@ jobs:
         run: |
           cd frontend
           go build
-      - name: list
-        run: go list -m all
       - name: go run
         working-directory: ${{ github.workspace }}
         run: |
