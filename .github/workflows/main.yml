@@ -12,9 +12,9 @@ jobs:
         with:
           go-version: '1.21.x'
       - name: Build
-        run: go build -v /home/runner/work/simple-fortune-cookie/simple-fortune-cookie/backend
+        run: go build -v ${{ github.workspace }}/backend
       - name: build
-        run: go build -v /home/runner/work/simple-fortune-cookie/simple-fortune-cookie/frontend
+        run: go build -v ${{ github.workspace }}/frontend
       - name: go run
         run: go run backend
       - name: go run
