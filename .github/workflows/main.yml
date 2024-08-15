@@ -22,13 +22,18 @@ jobs:
 
       - name: Verify that redis is up
         run: redis-cli ping
-      - name: Build
+      - name: Build backend
         working-directory: ${{ github.workspace }}
         run: |
           cd backend
           go build
-      - name: build
+      - name: build frontend
         working-directory: ${{ github.workspace }}
         run: |
           cd frontend
           go build
+      - name: go test frontend
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd frontend
+          go test
