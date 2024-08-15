@@ -4,7 +4,12 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        redis-version: [6, 7, 8]
+    services:
+      redis:
+        image: redis
     steps:
       - uses: actions/checkout@v4
       - name: Setup Go
@@ -14,7 +19,8 @@ jobs:
       - name: Start Redis
         uses: supercharge/redis-github-action@1.7.0
         with:
-          redis-version: 1.8.5
+          redis-version: ${{ matrix.redis-version }}
+          image: redis
       - name: Build
         working-directory: ${{ github.workspace }}
         run: |
