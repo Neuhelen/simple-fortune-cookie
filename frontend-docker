@@ -5,5 +5,5 @@ WORKDIR /app
 COPY frontend /app
 
 RUN go mod download
-RUN	go build
-CMD	go run frontend
+RUN	go build -o frontend
+CMD	run ["frontend"]
