@@ -1,21 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: backend-deployment
-    labels:
-        app: backend
+  name: backend-deployment
+  labels:
+    app: backend
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: backend
-    template:
-        metadata:
-            labels:
-                app: backend
-        spec:
-            containers:
-            - name: backend-deployment
-            image: ghcr.io/neuhelen/backend:latest
-            ports:
-                - containerPort: 8080
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend-deployment
+          image: ghcr.io/neuhelen/backend:latest
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: REDIS_HOST
+            value: "redis"
+          - name: REDIT_PORT
+            value: "6379"
+          ports:
+            - containerPort: 9000
