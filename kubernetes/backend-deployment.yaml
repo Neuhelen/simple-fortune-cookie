@@ -19,9 +19,11 @@ spec:
           image: ghcr.io/neuhelen/backend:latest
           imagePullPolicy: IfNotPresent
           env:
-          - name: REDIS_HOST
-            value: "redis"
-          - name: REDIT_PORT
-            value: "6379"
+          - name: BACKEND_DNS
+            value: "backend-service"
+          - name: BACKEND_PORT
+            value: "9000"
+          - name: REDIS_DNS
+            value: "redis-service"
           ports:
             - containerPort: 9000
