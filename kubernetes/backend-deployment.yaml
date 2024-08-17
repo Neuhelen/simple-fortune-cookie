@@ -15,7 +15,7 @@ spec:
                 app: backend
         spec:
             containers:
-                - image: ghcr.io/neuhelen/backend:latest
-                  name: backend-deployment
-                  ports:
-                      - containerPort: 8080
+            - name: backend-deployment
+            image: ghcr.io/neuhelen/backend:latest
+            ports:
+                - containerPort: 8080

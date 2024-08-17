@@ -15,7 +15,7 @@ spec:
                 app: redis
         spec:
             containers:
-                - image: redis:latest
-                  name: redis-deployment
-                  ports:
-                      - containerPort: 6379
+            - name: redis-deployment
+            image: redis:latest
+            ports:
+                - 6379
