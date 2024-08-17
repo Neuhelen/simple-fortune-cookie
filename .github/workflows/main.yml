@@ -61,7 +61,7 @@ jobs:
         uses: docker/login-action@v3.3.0
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
+          username: ${{ neuhelen }}
           password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Build and push backend Docker image
@@ -70,7 +70,7 @@ jobs:
           context: .
           file: ./backend-docker
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/backend:latest
+          tags: ghcr.io/${{ neuhelen }}/backend:latest
 
       - name: Build and push frontend Docker image
         uses: docker/build-push-action@v6.7.0
@@ -78,7 +78,7 @@ jobs:
           context: .
           file: ./frontend-docker
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/frontend:latest
+          tags: ghcr.io/${{ neuhelen }}/frontend:latest
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1.4.1
