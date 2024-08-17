@@ -17,6 +17,8 @@ services:
     environment:
       - BACKEND_DNS=backend
       - BACKEND_PORT=9000
+    depends_on:
+      - backend
   
   backend:
     build:
@@ -31,3 +33,5 @@ services:
       - BACKEND_DNS=backend
       - BACKEND_PORT=9000
       - REDIS_DNS=Redis
+    depends_on:
+      - Redis
