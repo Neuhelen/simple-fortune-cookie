@@ -6,4 +6,4 @@ COPY frontend /app
 
 RUN go mod download
 RUN	go build -o frontend
-CMD	run ["frontend"]
+CMD	["./frontend"]
