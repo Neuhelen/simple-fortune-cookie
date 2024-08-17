@@ -1,0 +1,34 @@
+name: Go
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21.x'
+      - name: Setup redis
+        uses: supercharge/redis-github-action@1.7.0
+        with: 
+          redis-version: latest
+      - name: Install redis cli # so we can test the server
+        run: sudo apt-get install -y redis-tools
+
+      - name: Verify that redis is up
+        run: redis-cli ping
+      - name: Build
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend
+          go build
+      - name: build
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd frontend
+          go build
