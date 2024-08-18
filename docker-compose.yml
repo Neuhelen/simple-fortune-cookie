@@ -8,9 +8,7 @@ services:
     hostname: Redis
 
   frontend:
-    build:
-      context: ./
-      dockerfile: frontend-docker
+    image: ghcr.io/neuhelen/frontend:latest
     ports:
       - '8080:8080'
     container_name: frontend
@@ -21,9 +19,7 @@ services:
       - backend
   
   backend:
-    build:
-      context: ./
-      dockerfile: backend-docker
+    image: ghcr.io/neuhelen/backend:latest
     restart: always
     ports:
       - '9000:9000'
