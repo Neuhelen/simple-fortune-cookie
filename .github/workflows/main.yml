@@ -1,7 +1,7 @@
 name: production
 on:
   workflow_run:
-    workflows: ["development"]  # Name of the first workflow
+    workflows: [development]  # Name of the first workflow
     types:
       - completed
 
