@@ -18,12 +18,8 @@ spec:
         - name: backend-deployment
           image: ghcr.io/neuhelen/backend:latest
           imagePullPolicy: IfNotPresent
-          env:
-          - name: BACKEND_DNS
-            value: "backend-service"
-          - name: BACKEND_PORT
-            value: "9000"
-          - name: REDIS_DNS
-            value: "redis-service"
+          envFrom:
+            - configMapRef:
+                name: backend-config
           ports:
             - containerPort: 9000

@@ -18,10 +18,8 @@ spec:
                 - image: ghcr.io/neuhelen/frontend:latest
                   name: frontend-deployment
                   imagePullPolicy: IfNotPresent
-                  env:
-                  - name: BACKEND_PORT
-                    value: "9000"
-                  - name: BACKEND_DNS
-                    value: "backend-service"
+                  envFrom:
+                    - configMapRef:
+                        name: frontend-config
                   ports:
                       - containerPort: 8080
