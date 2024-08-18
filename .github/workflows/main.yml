@@ -11,37 +11,22 @@ env:
   IMAGE_NAME: neuhelen/simple-fortune-cookie
 
 jobs:
-  docker:
+  deploy-backend:
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      attestations: write
-      id-token: write
-    steps: 
-      - name: Check out the repo
-        uses: actions/checkout@v4
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3.3.0
+    steps:
+      - name: pull backend
+        run: docker pull ghcr.io/neuhelen/backend:latest
+  deploy-frontend:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull backend
+        run: docker pull ghcr.io/neuhelen/frontend:latest
+  docker-compose:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hoverkraft-tech/compose-actions@v2.0.1
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ env.REPO_OWNER }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Build and push backend Docker image
-        uses: docker/build-push-action@v6.7.0
-        with:
-          context: .
-          file: ./backend-docker
-          push: true
-          tags: ghcr.io/${{ env.REPO_OWNER }}/backend:latest
-
-      - name: Build and push frontend Docker image
-        uses: docker/build-push-action@v6.7.0
-        with:
-          context: .
-          file: ./frontend-docker
-          push: true
-          tags: ghcr.io/${{ env.REPO_OWNER }}/frontend:latest
+          compose-file: "docker-compose.yml"
