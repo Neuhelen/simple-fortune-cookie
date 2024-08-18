@@ -41,4 +41,4 @@ jobs:
           username: ${{ env.REPO_OWNER }}
           password: ${{ secrets.GITHUB_TOKEN }}
       -  name: Start container
-         run: docker-compose -f "docker-compose.yml" up -d --build
+         run: docker compose -f "docker-compose.yml" up -d --build
