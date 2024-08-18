@@ -12,19 +12,19 @@ env:
 
 jobs:
   deploy-backend:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
     runs-on: ubuntu-latest
     steps:
       - name: pull backend
         run: docker pull ghcr.io/neuhelen/backend:latest
   deploy-frontend:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
     runs-on: ubuntu-latest
     steps:
       - name: pull backend
         run: docker pull ghcr.io/neuhelen/frontend:latest
   docker-compose:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
     runs-on: ubuntu-latest
     steps:
       - uses: hoverkraft-tech/compose-actions@v2.0.1
