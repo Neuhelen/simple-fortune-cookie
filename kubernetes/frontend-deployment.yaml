@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: frontend-deployment
+    labels:
+        app: frontend
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: frontend
+    template:
+        metadata:
+            labels:
+                app: frontend
+        spec:
+            containers:
+            - image: ghcr.io/neuhelen/frontend:latest
+              name: frontend-deployment
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - configMapRef:
+                    name: frontend-config
+              ports:
+                  - containerPort: 8080
