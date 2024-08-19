@@ -4,5 +4,5 @@ metadata:
   name: backend-config
 data:
   BACKEND_DNS: backend-service
-  BACKEND_PORT: "9000"
   REDIS_DNS: redis-service
+  REDIS_PORT: "6379"
