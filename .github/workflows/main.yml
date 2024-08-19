@@ -1,39 +1,44 @@
-name: Go
-on: [push]
+name: production
+on:
+  workflow_run:
+    workflows: [development]  # Name of the first workflow
+    types:
+      - completed
+
+env:
+  REGISTRY: ghcr.io
+  REPO_OWNER: neuhelen
+  IMAGE_NAME: neuhelen/simple-fortune-cookie
 
 jobs:
-  build:
+  on-failure:
     runs-on: ubuntu-latest
-    services:
-      redis:
-        image: redis
+    if: ${{ github.event.workflow_run.conclusion == 'failure'}}
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.21.x'
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.7.0
-        with: 
-          redis-version: latest
-      - name: Install redis cli # so we can test the server
-        run: sudo apt-get install -y redis-tools
-
-      - name: Verify that redis is up
-        run: redis-cli ping
-      - name: Build backend
-        working-directory: ${{ github.workspace }}
-        run: |
-          cd backend
-          go build
-      - name: build frontend
-        working-directory: ${{ github.workspace }}
-        run: |
-          cd frontend
-          go build
-      - name: go test frontend
-        working-directory: ${{ github.workspace }}
-        run: |
-          cd frontend
-          go test
+      -  run: echo 'The triggering workflow failed'
+  deploy-backend:
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull backend
+        run: docker pull ghcr.io/neuhelen/backend:latest
+  deploy-frontend:
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull backend
+        run: docker pull ghcr.io/neuhelen/frontend:latest
+  docker-compose:
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
+    runs-on: ubuntu-latest
+    steps:
+      -  name: Check out the repo
+         uses: actions/checkout@v4
+      -  name: Log in to the Container registry
+         uses: docker/login-action@v3.3.0
+         with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ env.REPO_OWNER }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -  name: Start container
+         run: docker compose -f "docker-compose.yml" up -d --build
